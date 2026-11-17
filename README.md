@@ -2,17 +2,21 @@
 
 Portfolio of **Md. Firoz Al Mahmud**, based in Dhaka, Bangladesh.
 
-> Phase 3 status: the original owner's and third-party content has been removed.
-> Portfolio sections are marked `TODO Phase 4` until the new content is added.
+> Phase 3 status: React scaffold and design system. All copy is placeholder
+> (`TODO Phase 4`) and lives in `src/data/portfolio.ts`.
 
 ## Stack
 
-- [Vite](https://vitejs.dev/) + TypeScript, Tailwind CSS v4 (reset + tokens), hand-written CSS
-- [GSAP](https://gsap.com/) + ScrollTrigger for motion, [Lenis](https://lenis.darkroom.engineering/) for smooth scroll
-- "Ping", the site guide, is an original SVG rig animated with GSAP (`src/guide.ts`)
-- Code-running background is a `<canvas>` (`src/codebg.ts`)
-- Space Grotesk is self-hosted in `src/fonts/` (SIL Open Font License)
+- React 18 + TypeScript (strict) + Vite 8
+- Tailwind CSS 4 with CSS-first tokens in `src/styles/globals.css`
+- Space Grotesk, self-hosted in `src/fonts/` (SIL Open Font License)
+- Light and dark themes via `prefers-color-scheme` and a manual toggle, with
+  `public/prepaint.js` preventing a flash of the wrong theme
 - Deployed by GitHub Actions to GitHub Pages on every push to `main`
+
+The production CSP is strict. The dev server relaxes `script-src` with
+`'unsafe-inline'` only for Vite's inline React Refresh preamble; the built
+output contains no inline scripts.
 
 ## Develop
 
@@ -26,21 +30,28 @@ npm run preview    # serve dist/ locally
 ## Layout
 
 ```
-index.html             the page
-src/styles.css         design tokens + all styling
-src/main.ts            nav, typewriter, reveals, counters, backgrounds
-src/guide.ts           Ping, the site guide
-src/codebg.ts          the typing-code canvas background
-src/ticketfield.ts     the WebGL hero field
-src/fonts/             self-hosted Space Grotesk woff2 files + OFL licence
-public/prepaint.js     pre-paint intro decision, kept external for the CSP
-.github/workflows/deploy.yml   build + GitHub Pages deployment
+index.html                        document shell + CSP + prepaint script
+src/main.tsx                      React entry
+src/App.tsx                       page composition and skip link
+src/components/ui/                Button, Container, SectionHeading, ThemeToggle
+src/components/sections/          Header, Hero, About, Skills, Projects,
+                                  EducationCertifications, Contact, Footer
+src/data/portfolio.ts             all copy in typed objects
+src/hooks/useTheme.ts             theme state, persistence, system listener
+src/styles/globals.css            design tokens, base styles, motion
+src/fonts/                        self-hosted Space Grotesk woff2 + OFL licence
+public/prepaint.js                pre-paint theme decision, kept external for the CSP
+.github/workflows/deploy.yml      pinned build + GitHub Pages deployment
 ```
 
-## Deployment
+## Accessibility
 
-The repository is a GitHub user site (`firoz671.github.io`), so Vite `base` is `/`.
-A project-site repository would need `/<repository-name>/` instead.
+- Skip link, semantic landmarks, one `h1`, and labelled sections
+- Visible keyboard focus on every interactive element
+- Decorative visuals are `aria-hidden`; all meaningful images added later must
+  have alt text
+- `prefers-reduced-motion` disables animation and hover movement
+- Layout is mobile-first and holds at 360px
 
 ## TODOs
 
