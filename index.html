@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" />
+  <title>Md. Firoz Al Mahmud · Portfolio</title>
+  <meta name="description" content="Personal portfolio of Md. Firoz Al Mahmud, based in Dhaka, Bangladesh." />
+  <meta name="theme-color" content="#0B1020" />
+  <!-- TODO Phase 5: canonical URL -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Md. Firoz Al Mahmud · Portfolio" />
+  <meta property="og:description" content="Personal portfolio of Md. Firoz Al Mahmud, based in Dhaka, Bangladesh." />
+  <!-- TODO Phase 5: Open Graph URL and image -->
+  <meta name="twitter:card" content="summary" />
+  <!-- TODO Phase 4: favicon -->
+  <link rel="stylesheet" href="/src/styles.css" />
+  <script src="%BASE_URL%prepaint.js"></script>
+</head>
+<body>
+  <a class="skip" href="#hero">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="orb orb-a" aria-hidden="true"></div>
+  <div class="orb orb-b" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top" aria-label="Back to top">Firoz<span>.</span></a>
+    <a class="nav__cta magnetic" href="#contact">Let's talk</a>
+  </header>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero" data-section="hero">
+      <canvas class="codebg" id="heroCode" aria-hidden="true"></canvas>
+      <canvas class="codebg codebg--field" id="heroField" aria-hidden="true"></canvas>
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="pill" data-deliver="Where I am.">
+            <span class="pill__dot"></span> Dhaka, Bangladesh · remote
+          </p>
+          <h1 class="hero__name" aria-label="Md. Firoz Al Mahmud">
+            <span class="hero__line" data-deliver="The name."><span class="split">Md. Firoz</span></span>
+            <span class="hero__line hero__line--accent" data-deliver="And the rest."><span class="split">Al Mahmud</span></span>
+          </h1>
+          <p class="hero__tag" data-deliver="In one line.">
+            <span class="type" id="typewriter" aria-live="polite"></span><span class="caret" aria-hidden="true"></span>
+          </p>
+          <div class="hero__chips" data-deliver="Status.">
+            <span class="chip">Portfolio in development</span>
+          </div>
+          <div class="hero__cta" data-deliver="The way in.">
+            <a class="btn btn--primary magnetic" href="#contact">Get in touch <span aria-hidden="true">→</span></a>
+          </div>
+          <!-- TODO Phase 4: hero highlights and statistics -->
+        </div>
+
+        <div class="hero__visual">
+          <div class="codewin" data-deliver="And the workbench." id="codewin">
+            <div class="codewin__bar">
+              <span></span><span></span><span></span>
+              <em>portfolio.ts</em>
+            </div>
+            <pre class="codewin__body" id="codeType" aria-label="Animated code sample"></pre>
+          </div>
+          <div class="hero__ticket" id="heroTicket" aria-hidden="true">
+            <div class="ticket">
+              <div class="ticket__head"><b>#0001</b><span class="ticket__status" data-status>Open</span></div>
+              <div class="ticket__line"></div>
+              <div class="ticket__line ticket__line--short"></div>
+              <div class="ticket__bar"><i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="scrollhint" href="#contact" aria-label="Scroll to contact"><span></span></a>
+      <button class="skipintro" id="skipIntro" type="button" hidden>Skip intro</button>
+    </section>
+
+    <!-- TODO Phase 4: About section -->
+    <!-- TODO Phase 4: Skills section -->
+    <!-- TODO Phase 4: AI workflow section -->
+    <!-- TODO Phase 4: Experience section -->
+    <!-- TODO Phase 4: Education section -->
+    <!-- TODO Phase 4: Stories and case studies -->
+    <!-- TODO Phase 4: Recommendations -->
+    <!-- TODO Phase 4: Selected work -->
+    <!-- TODO Phase 4: Beyond work -->
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section--contact" id="contact" data-section="contact">
+      <div class="wrap contact">
+        <div class="contact__copy">
+          <p class="eyebrow reveal" data-reveal>Contact</p>
+          <h2 class="h2 reveal" data-reveal>Say <em>hello</em>.</h2>
+          <p class="lead reveal" data-reveal>I am based in Dhaka, Bangladesh. Email is the fastest way to reach me.</p>
+          <div class="hero__cta reveal" data-reveal>
+            <a class="btn btn--primary magnetic" href="mailto:firoz.a.mahmud01@gmail.com">Email me</a>
+          </div>
+        </div>
+        <ul class="contact__list reveal" data-reveal>
+          <li><span>Email</span><a href="mailto:firoz.a.mahmud01@gmail.com">firoz.a.mahmud01@gmail.com</a></li>
+          <li><span>GitHub</span><a href="https://github.com/firoz671" target="_blank" rel="noopener noreferrer">github.com/firoz671</a></li>
+          <li><span>Location</span><b>Dhaka, Bangladesh</b></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__line" aria-hidden="true"></div>
+    <div class="wrap footer__row">
+      <span>© <span id="year"></span> Md. Firoz Al Mahmud</span>
+      <a href="#top" class="link">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- ============ GUIDE CHARACTER (mounted by src/guide.ts) ============ -->
+  <div id="guideRoot"></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
