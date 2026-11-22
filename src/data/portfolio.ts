@@ -150,6 +150,7 @@ const role = 'Software Engineer, Frontend (React)';
 const location = 'Dhaka, Bangladesh';
 const email = 'firoz.a.mahmud01@gmail.com';
 const github = 'https://github.com/firoz671';
+const linkedin = 'https://www.linkedin.com/in/firoz-al-mahmud-264982243/';
 const summarySeeking =
   'Seeking a Software Engineer role where I can contribute to scalable software solutions while continuously strengthening my engineering expertise.';
 
@@ -410,6 +411,12 @@ export const contact: ContactContent = {
       label: 'GitHub',
       value: 'github.com/firoz671',
       href: github,
+      external: true,
+    },
+    {
+      label: 'LinkedIn',
+      value: 'linkedin.com/in/firoz-al-mahmud-264982243',
+      href: linkedin,
       external: true,
     },
   ],
