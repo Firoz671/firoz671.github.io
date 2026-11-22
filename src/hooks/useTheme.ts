@@ -11,7 +11,7 @@ const META_COLORS: Record<Theme, string> = {
 function readTheme(): Theme {
   const current = document.documentElement.dataset.theme;
   if (current === 'light' || current === 'dark') return current;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'dark';
 }
 
 function applyTheme(theme: Theme) {
@@ -29,20 +29,6 @@ export function useTheme() {
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const onChange = (event: MediaQueryListEvent) => {
-      try {
-        if (localStorage.getItem(STORAGE_KEY)) return;
-      } catch {
-        return;
-      }
-      setTheme(event.matches ? 'dark' : 'light');
-    };
-    media.addEventListener('change', onChange);
-    return () => media.removeEventListener('change', onChange);
-  }, []);
 
   const toggleTheme = useCallback(() => {
     setTheme((previous) => {

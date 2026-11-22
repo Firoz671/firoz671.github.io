@@ -60,23 +60,6 @@ html[data-theme="dark"] {
   --focus: #93c5fd;
 }
 
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme]) {
-    color-scheme: dark;
-    --canvas: #0c0d10;
-    --surface: #13151a;
-    --surface-2: #1b1e25;
-    --ink: #f2f1ec;
-    --muted: #a8abb2;
-    --subtle: #8b8f97;
-    --line: #2a2e37;
-    --accent: #fb923c;
-    --accent-strong: #fdba74;
-    --accent-ink: #1a0f04;
-    --focus: #93c5fd;
-  }
-}
-
 @theme inline {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 

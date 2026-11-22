@@ -2,11 +2,7 @@
   try {
     var stored = localStorage.getItem('theme');
     var theme =
-      stored === 'light' || stored === 'dark'
-        ? stored
-        : matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light';
+      stored === 'light' || stored === 'dark' ? stored : 'dark';
     var root = document.documentElement;
     root.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
