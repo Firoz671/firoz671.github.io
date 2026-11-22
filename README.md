@@ -9,7 +9,7 @@ graduate based in Dhaka, Bangladesh.
 - Tailwind CSS 4 with CSS-first tokens
 - Space Grotesk, self-hosted in `src/fonts/`
 - Light and dark themes with a pre-paint theme script
-- Deployed to GitHub Pages by a pinned GitHub Actions workflow
+- Deployed on Vercel with a `vercel.json` configuration
 
 ## Scripts
 
