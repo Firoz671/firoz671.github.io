@@ -151,7 +151,7 @@ const location = 'Dhaka, Bangladesh';
 const email = 'firoz.a.mahmud01@gmail.com';
 const github = 'https://github.com/firoz671';
 const summarySeeking =
-  'Seeking a Software Engineer role where I can contribute to scalable software solutions while continuing to strengthen my engineering skills.';
+  'Seeking a Software Engineer role where I can contribute to scalable software solutions while continuously strengthening my engineering expertise.';
 
 export const profile: Profile = {
   brand: 'Firoz',
@@ -179,7 +179,7 @@ export const profile: Profile = {
   hero: {
     eyebrow: role,
     titleLines: ['Md. Firoz', 'Al Mahmud'],
-    lead: 'Computer Science and Engineering graduate building responsive, production-ready web applications with React.js, JavaScript, Tailwind CSS, and REST APIs.',
+    lead: 'Computer Science and Engineering graduate with hands-on experience building responsive, production-ready web applications using React.js, JavaScript, Tailwind CSS, and REST APIs.',
     primaryCta: { label: 'Email Firoz', href: `mailto:${email}` },
     secondaryCta: { label: 'View projects', href: '#projects' },
     highlights: [
@@ -202,7 +202,7 @@ export const profile: Profile = {
     heading: role,
     paragraphs: [
       'Computer Science and Engineering graduate with hands-on experience building responsive, production-ready web applications using React.js, JavaScript, Tailwind CSS, and REST APIs.',
-      'Strong foundation in frontend development, UI implementation, object-oriented programming, data structures, and software development practices. Experienced in turning designs into pixel-perfect interfaces, solving responsive UI challenges, and building reusable components.',
+      'Strong foundation in frontend development, UI implementation, object-oriented programming, data structures, and software development practices. Experienced in transforming designs into pixel-perfect interfaces, solving responsive UI challenges, and developing reusable components.',
       summarySeeking,
     ],
     facts: [
@@ -301,30 +301,41 @@ export const projects: ProjectsContent = {
       title: 'Blinxos',
       kind: 'Online watch store',
       bullets: [
-        'Responsive React.js storefront with product browsing, search, categories, cart, and checkout.',
-        'Product variants, color-based image switching, dynamic galleries, and mobile-friendly sliders.',
-        'Reusable, scalable UI components, with frontend API integration for dynamic product and catalog data.',
-        'Meta Pixel tracking for key customer and e-commerce interactions.',
+        'Developed a responsive React.js e-commerce storefront with product browsing, search, categories, cart, and checkout.',
+        'Implemented product variants, color-based image switching, dynamic galleries, and mobile-friendly sliders for the watch catalog.',
+        'Created reusable and scalable UI components for consistent frontend development, with frontend APIs integrated for dynamic product and catalog data.',
+        'Solved responsive UI and frontend integration challenges across different screen sizes, and integrated Meta Pixel tracking for key customer and e-commerce interactions.',
       ],
-      outcome: 'A production-ready storefront optimized for mobile users.',
+      outcome:
+        'Delivered a production-ready storefront optimized for mobile users and real-world e-commerce operations.',
       stack: ['React.js', 'Tailwind CSS', 'REST APIs'],
       live: { label: 'Visit Blinxos', href: 'https://blinxos.com' },
-      image: null,
+      image: {
+        src: '/img/blinxos.webp',
+        width: 1916,
+        height: 965,
+        alt: 'Blinxos online watch store homepage with a free shipping banner and watch categories',
+      },
     },
     {
       title: 'Hookfinity',
       kind: 'Fashion e-commerce platform',
       bullets: [
-        'Fashion storefront built with React.js, Tailwind CSS, and REST APIs, covering browsing, search, and categories.',
-        'Cart and checkout flows supported by product variants, color-based image switching, dynamic galleries, and mobile-friendly sliders.',
-        'Reusable components shared across catalog and product views, with frontend API integration for live product data.',
-        'Meta Pixel events for key customer and e-commerce interactions.',
+        'Built a responsive React.js fashion e-commerce storefront covering product browsing, search, categories, cart, and checkout.',
+        'Supported the fashion catalog with product variants, color-based image switching, dynamic galleries, and mobile-friendly sliders.',
+        'Built reusable UI components for consistent frontend development and connected frontend APIs for dynamic product and catalog data.',
+        'Resolved responsive layout and integration issues across screen sizes and added Meta Pixel tracking for e-commerce interactions.',
       ],
       outcome:
-        'A complete frontend experience covering product discovery, selection, cart management, and checkout.',
+        'Delivered a complete frontend experience covering product discovery, product selection, cart management, and checkout.',
       stack: ['React.js', 'Tailwind CSS', 'REST APIs'],
       live: { label: 'Visit Hookfinity', href: 'https://hookfinityshop.com' },
-      image: null,
+      image: {
+        src: '/img/hookfinity.webp',
+        width: 1917,
+        height: 917,
+        alt: "Hookfinity fashion e-commerce homepage showing a new arrivals collection of men's shirts",
+      },
     },
     {
       title:
@@ -351,7 +362,7 @@ export const education: EducationContent = {
   thesisLabel: 'Thesis',
   items: [
     {
-      degree: 'B.Sc. in Computer Science and Engineering',
+      degree: 'Bachelor of Science in Computer Science and Engineering',
       institution: 'Daffodil International University',
       period: 'Jan 2022 – Dec 2025',
       thesis:
@@ -403,5 +414,8 @@ export const contact: ContactContent = {
     },
   ],
   locationLabel: 'Location',
-  cv: null,
+  cv: {
+    label: 'Download CV (PDF)',
+    href: '/Firoz-Al-Mahmud-CV.pdf',
+  },
 };
