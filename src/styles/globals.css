@@ -248,6 +248,15 @@ html[data-theme="dark"] {
     box-shadow: var(--card-shadow-hover);
   }
 
+  .nav-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
