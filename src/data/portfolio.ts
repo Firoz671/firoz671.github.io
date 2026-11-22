@@ -5,12 +5,7 @@ export interface NavItem {
 
 export interface ActionLink {
   label: string;
-  href: string | null;
-}
-
-export interface Highlight {
-  value: string;
-  label: string;
+  href: string;
 }
 
 export interface Fact {
@@ -22,13 +17,17 @@ export interface Profile {
   brand: string;
   name: string;
   initials: string;
+  role: string;
   location: string;
+  languages: string;
+  currentlyLearning: string;
   ui: {
     skipToContent: string;
     primaryNav: string;
     themeToDark: string;
     themeToLight: string;
     backToTop: string;
+    opensInNewTab: string;
   };
   nav: NavItem[];
   hero: {
@@ -37,10 +36,9 @@ export interface Profile {
     lead: string;
     primaryCta: ActionLink;
     secondaryCta: ActionLink;
-    highlights: Highlight[];
+    highlights: string[];
     panel: {
       title: string;
-      status: string;
       rows: Fact[];
     };
   };
@@ -48,7 +46,6 @@ export interface Profile {
     eyebrow: string;
     heading: string;
     paragraphs: string[];
-    portraitNote: string;
     facts: Fact[];
   };
   footer: {
@@ -59,85 +56,118 @@ export interface Profile {
 export interface SkillsContent {
   eyebrow: string;
   heading: string;
-  intro: string;
   groups: Array<{
     title: string;
     items: string[];
   }>;
 }
 
-export type ProjectVisual = 'a' | 'b' | 'c';
+export interface ProjectImage {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
+export interface ProjectLink {
+  label: string;
+  href: string;
+}
 
 export interface Project {
   title: string;
   kind: string;
-  summary: string;
-  meta: string;
-  tags: string[];
-  visual: ProjectVisual;
+  bullets: string[];
+  outcome: string | null;
+  stack: string[];
+  live: ProjectLink | null;
+  image: ProjectImage | null;
 }
 
 export interface ProjectsContent {
   eyebrow: string;
   heading: string;
-  intro: string;
+  outcomeLabel: string;
   items: Project[];
+}
+
+export interface EducationItem {
+  degree: string;
+  institution: string;
+  period: string;
+  thesis: string;
 }
 
 export interface EducationContent {
   eyebrow: string;
   heading: string;
-  intro: string;
   listHeading: string;
-  items: Array<{
-    title: string;
-    institution: string;
-    period: string;
-    note: string;
-  }>;
+  thesisLabel: string;
+  items: EducationItem[];
+  activities: {
+    heading: string;
+    items: string[];
+  };
 }
 
 export interface CertificationsContent {
-  eyebrow: string;
   heading: string;
-  intro: string;
   items: Array<{
     title: string;
     issuer: string;
-    year: string;
-    note: string;
   }>;
 }
 
 export interface ContactLink {
   label: string;
   value: string;
-  href: string | null;
+  href: string;
+  external: boolean;
+}
+
+export interface CvLink {
+  label: string;
+  href: string;
 }
 
 export interface ContactContent {
   eyebrow: string;
   heading: string;
   lead: string;
-  email: ActionLink;
-  emailCtaLabel: string;
-  responseNote: string;
+  emailActionLabel: string;
+  email: {
+    address: string;
+    href: string;
+  };
   linksHeading: string;
   links: ContactLink[];
   locationLabel: string;
+  cv: CvLink | null;
 }
 
+const name = 'Md. Firoz Al Mahmud';
+const role = 'Software Engineer, Frontend (React)';
+const location = 'Dhaka, Bangladesh';
+const email = 'firoz.a.mahmud01@gmail.com';
+const github = 'https://github.com/firoz671';
+const summarySeeking =
+  'Seeking a Software Engineer role where I can contribute to scalable software solutions while continuing to strengthen my engineering skills.';
+
 export const profile: Profile = {
-  brand: 'TODO Phase 4',
-  name: 'TODO Phase 4: full name',
-  initials: 'T4',
-  location: 'TODO Phase 4: location',
+  brand: 'Firoz',
+  name,
+  initials: 'MFA',
+  role,
+  location,
+  languages: 'Bangla, English',
+  currentlyLearning: 'Next.js',
   ui: {
     skipToContent: 'Skip to content',
     primaryNav: 'Primary',
     themeToDark: 'Switch to dark theme',
     themeToLight: 'Switch to light theme',
     backToTop: 'Back to top',
+    opensInNewTab: 'opens in a new tab',
   },
   nav: [
     { label: 'About', href: '#about' },
@@ -147,165 +177,231 @@ export const profile: Profile = {
     { label: 'Contact', href: '#contact' },
   ],
   hero: {
-    eyebrow: 'TODO Phase 4: availability or status line',
-    titleLines: ['TODO Phase 4:', 'your name here'],
-    lead: 'TODO Phase 4: one-sentence positioning statement that says who you are and what you do.',
-    primaryCta: { label: 'TODO Phase 4: primary action', href: '#contact' },
-    secondaryCta: { label: 'TODO Phase 4: secondary action', href: '#projects' },
+    eyebrow: role,
+    titleLines: ['Md. Firoz', 'Al Mahmud'],
+    lead: 'Computer Science and Engineering graduate building responsive, production-ready web applications with React.js, JavaScript, Tailwind CSS, and REST APIs.',
+    primaryCta: { label: 'Email Firoz', href: `mailto:${email}` },
+    secondaryCta: { label: 'View projects', href: '#projects' },
     highlights: [
-      { value: 'TODO', label: 'Phase 4: highlight one' },
-      { value: 'TODO', label: 'Phase 4: highlight two' },
-      { value: 'TODO', label: 'Phase 4: highlight three' },
+      '2 live e-commerce storefronts',
+      '10,000-comment sentiment dataset',
+      'B.Sc. in CSE, 2025',
     ],
     panel: {
-      title: 'TODO Phase 4: overview panel',
-      status: 'TODO Phase 4: status',
+      title: 'Profile',
       rows: [
-        { label: 'TODO Phase 4: label', value: 'TODO Phase 4: value' },
-        { label: 'TODO Phase 4: label', value: 'TODO Phase 4: value' },
-        { label: 'TODO Phase 4: label', value: 'TODO Phase 4: value' },
+        { label: 'Role', value: role },
+        { label: 'Location', value: location },
+        { label: 'Languages', value: 'Bangla, English' },
+        { label: 'Currently learning', value: 'Next.js' },
       ],
     },
   },
   about: {
     eyebrow: 'About',
-    heading: 'TODO Phase 4: about heading',
+    heading: role,
     paragraphs: [
-      'TODO Phase 4: first about paragraph. Describe the work, the focus, and the kind of problems worth solving.',
-      'TODO Phase 4: second about paragraph. Add the context, values, and the through-line of the career.',
+      'Computer Science and Engineering graduate with hands-on experience building responsive, production-ready web applications using React.js, JavaScript, Tailwind CSS, and REST APIs.',
+      'Strong foundation in frontend development, UI implementation, object-oriented programming, data structures, and software development practices. Experienced in turning designs into pixel-perfect interfaces, solving responsive UI challenges, and building reusable components.',
+      summarySeeking,
     ],
-    portraitNote: 'TODO Phase 4: portrait and a short caption.',
     facts: [
-      { label: 'TODO Phase 4: label', value: 'TODO Phase 4: value' },
-      { label: 'TODO Phase 4: label', value: 'TODO Phase 4: value' },
-      { label: 'TODO Phase 4: label', value: 'TODO Phase 4: value' },
+      { label: 'Role', value: role },
+      { label: 'Location', value: location },
+      { label: 'Languages', value: 'Bangla, English' },
+      { label: 'Currently learning', value: 'Next.js' },
     ],
   },
   footer: {
-    tagline: 'TODO Phase 4: footer note or short sign-off.',
+    tagline: role,
   },
 };
 
 export const skills: SkillsContent = {
   eyebrow: 'Skills',
-  heading: 'TODO Phase 4: skills heading',
-  intro: 'TODO Phase 4: a sentence that frames the skill groups and how they are used together.',
+  heading: 'Technical skills',
   groups: [
     {
-      title: 'TODO Phase 4: skill group one',
+      title: 'Frontend',
       items: [
-        'TODO Phase 4: skill one',
-        'TODO Phase 4: skill two',
-        'TODO Phase 4: skill three',
-        'TODO Phase 4: skill four',
+        'React.js',
+        'JavaScript (ES6+)',
+        'HTML5',
+        'CSS3',
+        'Tailwind CSS',
+        'Responsive Design',
+        'Pixel-Perfect UI',
       ],
     },
     {
-      title: 'TODO Phase 4: skill group two',
+      title: 'State management',
+      items: ['Context API (React)'],
+    },
+    {
+      title: 'API and integration',
+      items: ['REST API integration', 'Postman', 'API testing'],
+    },
+    {
+      title: 'Working knowledge',
+      items: ['Python (data scraping, OOP)', 'Java (OOP)'],
+    },
+    {
+      title: 'Design-to-code',
+      items: ['Figma to HTML', 'PSD to HTML', 'Adobe XD to HTML'],
+    },
+    {
+      title: 'AI-assisted development',
       items: [
-        'TODO Phase 4: skill one',
-        'TODO Phase 4: skill two',
-        'TODO Phase 4: skill three',
-        'TODO Phase 4: skill four',
+        'Claude',
+        'OpenCode',
+        'Ollama',
+        'local LLMs',
+        'AI-assisted coding',
+        'context engineering',
       ],
     },
     {
-      title: 'TODO Phase 4: skill group three',
+      title: 'Foundations',
       items: [
-        'TODO Phase 4: skill one',
-        'TODO Phase 4: skill two',
-        'TODO Phase 4: skill three',
-        'TODO Phase 4: skill four',
+        'Data Structures and Algorithms',
+        'OOP',
+        'SDLC',
+        'STLC',
+        'cloud concepts',
+      ],
+    },
+    {
+      title: 'Tools',
+      items: [
+        'Git',
+        'GitHub',
+        'VS Code',
+        'Postman',
+        'Microsoft Office',
+        'Excel',
+      ],
+    },
+    {
+      title: 'Also',
+      items: [
+        'Technical report writing',
+        'knowledge base authoring',
+        'cross-team collaboration',
       ],
     },
   ],
 };
 
 export const projects: ProjectsContent = {
-  eyebrow: 'Projects',
-  heading: 'TODO Phase 4: projects heading',
-  intro: 'TODO Phase 4: a sentence about the kind of work these case studies represent.',
+  eyebrow: 'Selected work',
+  heading: 'Projects',
+  outcomeLabel: 'Outcome',
   items: [
     {
-      title: 'TODO Phase 4: e-commerce storefront one',
-      kind: 'E-commerce storefront',
-      summary: 'TODO Phase 4: summary of the first storefront, the problem, and what changed.',
-      meta: 'TODO Phase 4: role · year',
-      tags: ['TODO Phase 4: tag', 'TODO Phase 4: tag', 'TODO Phase 4: tag'],
-      visual: 'a',
+      title: 'Blinxos',
+      kind: 'Online watch store',
+      bullets: [
+        'Responsive React.js storefront with product browsing, search, categories, cart, and checkout.',
+        'Product variants, color-based image switching, dynamic galleries, and mobile-friendly sliders.',
+        'Reusable, scalable UI components, with frontend API integration for dynamic product and catalog data.',
+        'Meta Pixel tracking for key customer and e-commerce interactions.',
+      ],
+      outcome: 'A production-ready storefront optimized for mobile users.',
+      stack: ['React.js', 'Tailwind CSS', 'REST APIs'],
+      live: { label: 'Visit Blinxos', href: 'https://blinxos.com' },
+      image: null,
     },
     {
-      title: 'TODO Phase 4: e-commerce storefront two',
-      kind: 'E-commerce storefront',
-      summary: 'TODO Phase 4: summary of the second storefront and the decisions behind it.',
-      meta: 'TODO Phase 4: role · year',
-      tags: ['TODO Phase 4: tag', 'TODO Phase 4: tag', 'TODO Phase 4: tag'],
-      visual: 'b',
+      title: 'Hookfinity',
+      kind: 'Fashion e-commerce platform',
+      bullets: [
+        'Fashion storefront built with React.js, Tailwind CSS, and REST APIs, covering browsing, search, and categories.',
+        'Cart and checkout flows supported by product variants, color-based image switching, dynamic galleries, and mobile-friendly sliders.',
+        'Reusable components shared across catalog and product views, with frontend API integration for live product data.',
+        'Meta Pixel events for key customer and e-commerce interactions.',
+      ],
+      outcome:
+        'A complete frontend experience covering product discovery, selection, cart management, and checkout.',
+      stack: ['React.js', 'Tailwind CSS', 'REST APIs'],
+      live: { label: 'Visit Hookfinity', href: 'https://hookfinityshop.com' },
+      image: null,
     },
     {
-      title: 'TODO Phase 4: data and NLP study',
-      kind: 'Data / NLP study',
-      summary: 'TODO Phase 4: summary of the data or NLP study, the method, and the finding.',
-      meta: 'TODO Phase 4: role · year',
-      tags: ['TODO Phase 4: tag', 'TODO Phase 4: tag', 'TODO Phase 4: tag'],
-      visual: 'c',
+      title:
+        'Sentiment-Based Study of Public Opinion and Perception on AI Adoption in Bangladesh',
+      kind: 'Thesis',
+      bullets: [
+        'Built a custom dataset of 10,000 code-mixed comments on public sentiment toward AI in Bangladesh.',
+        'Data cleaning, preprocessing, and exploratory analysis with Python libraries.',
+        'Benchmarked multiple deep learning models for sentiment classification.',
+        'Analyzed model performance and insights for a low-resource, code-mixed language context.',
+      ],
+      outcome: null,
+      stack: ['Python', 'Data analysis'],
+      live: null,
+      image: null,
     },
   ],
 };
 
 export const education: EducationContent = {
   eyebrow: 'Education',
-  heading: 'TODO Phase 4: education and certifications heading',
-  intro: 'TODO Phase 4: a short note about training and credentials.',
-  listHeading: 'TODO Phase 4: education',
+  heading: 'Education and certifications',
+  listHeading: 'Education',
+  thesisLabel: 'Thesis',
   items: [
     {
-      title: 'TODO Phase 4: degree or program',
-      institution: 'TODO Phase 4: institution',
-      period: 'TODO Phase 4: period',
-      note: 'TODO Phase 4: one line about the focus of the program.',
-    },
-    {
-      title: 'TODO Phase 4: second degree or program',
-      institution: 'TODO Phase 4: institution',
-      period: 'TODO Phase 4: period',
-      note: 'TODO Phase 4: one line about the focus of the program.',
+      degree: 'B.Sc. in Computer Science and Engineering',
+      institution: 'Daffodil International University',
+      period: 'Jan 2022 – Dec 2025',
+      thesis:
+        'Sentiment-Based Study of Public Opinion and Perception on AI Adoption in Bangladesh',
     },
   ],
+  activities: {
+    heading: 'Activities',
+    items: [
+      'Participated in the "Take Off" and "Unlock the Algorithm" programming contests.',
+    ],
+  },
 };
 
 export const certifications: CertificationsContent = {
-  eyebrow: 'Certifications',
-  heading: 'TODO Phase 4: certifications',
-  intro: 'TODO Phase 4: a line about how these certifications support the work.',
+  heading: 'Certifications',
   items: [
     {
-      title: 'TODO Phase 4: certification one',
-      issuer: 'TODO Phase 4: issuer',
-      year: 'TODO Phase 4: year',
-      note: 'TODO Phase 4: one line about what the certification covers.',
+      title: 'JavaScript Workshop for Absolute Beginners',
+      issuer: 'Ostaad',
     },
     {
-      title: 'TODO Phase 4: certification two',
-      issuer: 'TODO Phase 4: issuer',
-      year: 'TODO Phase 4: year',
-      note: 'TODO Phase 4: one line about what the certification covers.',
+      title: 'Responsive Web Design Certification',
+      issuer: 'freeCodeCamp',
+    },
+    {
+      title: 'Vibe Coding Your First Agent with Google Gemini',
+      issuer: 'Google DeepMind',
     },
   ],
 };
 
 export const contact: ContactContent = {
   eyebrow: 'Contact',
-  heading: 'TODO Phase 4: contact heading',
-  lead: 'TODO Phase 4: a sentence inviting the right kind of conversation.',
-  email: { label: 'TODO Phase 4: email address', href: null },
-  emailCtaLabel: 'TODO Phase 4: email action',
-  responseNote: 'TODO Phase 4: response window or note.',
-  linksHeading: 'TODO Phase 4: elsewhere',
+  heading: 'Contact',
+  lead: summarySeeking,
+  emailActionLabel: 'Email Firoz',
+  email: {
+    address: email,
+    href: `mailto:${email}`,
+  },
+  linksHeading: 'Links',
   links: [
-    { label: 'TODO Phase 4: link label', value: 'TODO Phase 4: link value', href: null },
-    { label: 'TODO Phase 4: link label', value: 'TODO Phase 4: link value', href: null },
-    { label: 'TODO Phase 4: link label', value: 'TODO Phase 4: link value', href: null },
+    {
+      label: 'GitHub',
+      value: 'github.com/firoz671',
+      href: github,
+      external: true,
+    },
   ],
-  locationLabel: 'TODO Phase 4: location label',
+  locationLabel: 'Location',
+  cv: null,
 };

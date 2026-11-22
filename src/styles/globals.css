@@ -248,33 +248,6 @@ html[data-theme="dark"] {
     box-shadow: var(--card-shadow-hover);
   }
 
-  .project-visual-a {
-    background:
-      linear-gradient(135deg, color-mix(in oklab, var(--accent) 26%, transparent), transparent 58%),
-      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 2.5rem),
-      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 2.5rem);
-  }
-
-  .project-visual-b {
-    background:
-      radial-gradient(
-        70% 90% at 18% 10%,
-        color-mix(in oklab, var(--focus) 22%, transparent),
-        transparent 62%
-      ),
-      repeating-linear-gradient(45deg, var(--line) 0 1px, transparent 1px 2rem);
-  }
-
-  .project-visual-c {
-    background:
-      radial-gradient(
-        65% 80% at 78% 20%,
-        color-mix(in oklab, var(--accent) 24%, transparent),
-        transparent 60%
-      ),
-      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 1.75rem),
-      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 4rem);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

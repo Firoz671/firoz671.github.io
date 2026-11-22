@@ -2,8 +2,8 @@
 
 Portfolio of **Md. Firoz Al Mahmud**, based in Dhaka, Bangladesh.
 
-> Phase 3 status: React scaffold and design system. All copy is placeholder
-> (`TODO Phase 4`) and lives in `src/data/portfolio.ts`.
+> Phase 4 status: real content, favicon, and SEO basics are in place. All copy
+> lives in `src/data/portfolio.ts`.
 
 ## Stack
 
@@ -55,5 +55,5 @@ public/prepaint.js                pre-paint theme decision, kept external for th
 
 ## TODOs
 
-- Phase 4: portfolio content, favicon, and any new imagery
-- Phase 5: canonical URL and Open Graph URL/image
+- Phase 5: canonical URL, Open Graph URL/image, and sitemap
+- Add a CV PDF and LinkedIn URL when available

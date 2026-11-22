@@ -14,51 +14,59 @@ export function EducationCertifications() {
           id="education-heading"
           eyebrow={education.eyebrow}
           title={education.heading}
-          description={education.intro}
         />
 
         <div className="mt-12 rounded-card border border-line bg-surface p-6 shadow-card sm:p-10">
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+          <h3 className="text-eyebrow font-semibold uppercase text-accent-strong">
+            {education.listHeading}
+          </h3>
+
+          {education.items.map((item) => (
+            <div key={item.degree} className="mt-5">
+              <p className="text-caption font-semibold text-subtle">
+                {item.period}
+              </p>
+              <h4 className="mt-1 text-lg">{item.degree}</h4>
+              <p className="text-sm text-muted">{item.institution}</p>
+              <p className="mt-3 max-w-prose text-sm text-muted">
+                <span className="font-semibold text-ink">
+                  {education.thesisLabel}:{' '}
+                </span>
+                {item.thesis}
+              </p>
+            </div>
+          ))}
+
+          <div className="mt-10 grid gap-10 border-t border-line pt-8 lg:grid-cols-2 lg:gap-12">
             <div>
               <h3 className="text-eyebrow font-semibold uppercase text-accent-strong">
-                {education.listHeading}
+                {certifications.heading}
               </h3>
-              <ul className="mt-6 space-y-6">
-                {education.items.map((item) => (
-                  <li
-                    key={item.title}
-                    className="border-t border-line pt-6 first:border-t-0 first:pt-0"
-                  >
-                    <p className="text-caption font-semibold text-subtle">
-                      {item.period}
-                    </p>
-                    <h4 className="mt-1 text-lg">{item.title}</h4>
-                    <p className="text-sm text-muted">{item.institution}</p>
-                    <p className="mt-2 text-sm text-muted">{item.note}</p>
+              <ul className="mt-5 space-y-5">
+                {certifications.items.map((item) => (
+                  <li key={item.title}>
+                    <h4 className="text-lg">{item.title}</h4>
+                    <p className="text-sm text-muted">{item.issuer}</p>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="border-t border-line pt-10 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+            <div className="lg:border-l lg:border-line lg:pl-12">
               <h3 className="text-eyebrow font-semibold uppercase text-accent-strong">
-                {certifications.heading}
+                {education.activities.heading}
               </h3>
-              <p className="mt-3 text-sm text-muted">
-                {certifications.intro}
-              </p>
-              <ul className="mt-6 space-y-6">
-                {certifications.items.map((item) => (
+              <ul className="mt-5 space-y-3">
+                {education.activities.items.map((item) => (
                   <li
-                    key={item.title}
-                    className="border-t border-line pt-6 first:border-t-0 first:pt-0"
+                    key={item}
+                    className="flex gap-3 text-sm text-muted"
                   >
-                    <p className="text-caption font-semibold text-subtle">
-                      {item.year}
-                    </p>
-                    <h4 className="mt-1 text-lg">{item.title}</h4>
-                    <p className="text-sm text-muted">{item.issuer}</p>
-                    <p className="mt-2 text-sm text-muted">{item.note}</p>
+                    <span
+                      className="mt-[0.7em] h-px w-3 shrink-0 bg-accent"
+                      aria-hidden="true"
+                    />
+                    {item}
                   </li>
                 ))}
               </ul>

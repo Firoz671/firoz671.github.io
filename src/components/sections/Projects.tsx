@@ -1,14 +1,8 @@
-import { projects } from '../../data/portfolio';
-import type { ProjectVisual } from '../../data/portfolio';
+import { profile, projects } from '../../data/portfolio';
 import { Container } from '../ui/Container';
+import { ExternalLink } from '../ui/ExternalLink';
 import { SectionHeading } from '../ui/SectionHeading';
 import { cx } from '../ui/classNames';
-
-const visualClass: Record<ProjectVisual, string> = {
-  a: 'project-visual-a',
-  b: 'project-visual-b',
-  c: 'project-visual-c',
-};
 
 export function Projects() {
   return (
@@ -22,7 +16,6 @@ export function Projects() {
           id="projects-heading"
           eyebrow={projects.eyebrow}
           title={projects.heading}
-          description={projects.intro}
         />
 
         <ul className="mt-12 grid gap-6 md:grid-cols-2">
@@ -31,14 +24,18 @@ export function Projects() {
               key={project.title}
               className={cx(index === 0 && 'md:col-span-2')}
             >
-              <article className="card-lift group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-card">
-                <div
-                  aria-hidden="true"
-                  className={cx(
-                    'h-32 w-full border-b border-line md:h-40',
-                    visualClass[project.visual],
-                  )}
-                />
+              <article className="card-lift flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-card">
+                {project.image ? (
+                  <img
+                    src={project.image.src}
+                    width={project.image.width}
+                    height={project.image.height}
+                    alt={project.image.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full border-b border-line object-cover"
+                  />
+                ) : null}
 
                 <div className="flex flex-1 flex-col p-6 md:p-8">
                   <div className="flex items-center justify-between gap-4 text-eyebrow font-semibold uppercase text-subtle">
@@ -48,27 +45,52 @@ export function Projects() {
                     </span>
                   </div>
 
-                  <h3 className="mt-4 text-h3 transition-colors group-hover:text-accent-strong">
-                    {project.title}
-                  </h3>
-                  <p className="mt-3 max-w-prose text-sm text-muted">
-                    {project.summary}
-                  </p>
+                  <h3 className="mt-3 text-h3">{project.title}</h3>
 
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {project.tags.map((tag, tagIndex) => (
-                      <li
-                        key={`${tag}-${tagIndex}`}
-                        className="rounded-full border border-line bg-surface-2 px-3 py-1 text-caption font-semibold text-muted"
-                      >
-                        {tag}
+                  <ul className="mt-5 max-w-prose space-y-2.5 text-sm text-muted">
+                    {project.bullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-3">
+                        <span
+                          className="mt-[0.7em] h-px w-3 shrink-0 bg-accent"
+                          aria-hidden="true"
+                        />
+                        {bullet}
                       </li>
                     ))}
                   </ul>
 
-                  <p className="mt-auto pt-6 text-caption font-semibold text-subtle">
-                    {project.meta}
-                  </p>
+                  {project.outcome ? (
+                    <p className="mt-5 max-w-prose border-l-2 border-accent pl-4 text-sm text-muted">
+                      <span className="font-semibold text-ink">
+                        {projects.outcomeLabel}:{' '}
+                      </span>
+                      {project.outcome}
+                    </p>
+                  ) : null}
+
+                  <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-6">
+                    <ul className="flex flex-wrap gap-2">
+                      {project.stack.map((item) => (
+                        <li
+                          key={item}
+                          className="rounded-full border border-line bg-surface-2 px-3 py-1 text-caption font-semibold text-muted"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {project.live ? (
+                      <ExternalLink
+                        href={project.live.href}
+                        newTabLabel={profile.ui.opensInNewTab}
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong underline-offset-4 hover:underline"
+                      >
+                        {project.live.label}
+                        <span aria-hidden="true">↗</span>
+                      </ExternalLink>
+                    ) : null}
+                  </div>
                 </div>
               </article>
             </li>

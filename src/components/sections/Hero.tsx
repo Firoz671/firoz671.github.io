@@ -18,7 +18,7 @@ export function Hero() {
         className="absolute inset-0 bg-grid bg-grid-fade"
       />
 
-      <Container className="relative py-20 sm:py-24 lg:py-32">
+      <Container className="relative py-20 sm:py-24 lg:py-28">
         <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
           <div className="hero-stagger">
             <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-caption font-semibold text-muted">
@@ -29,10 +29,14 @@ export function Hero() {
               {hero.eyebrow}
             </p>
 
-            <h1 id="hero-title" className="mt-6 text-display">
+            <h1
+              id="hero-title"
+              aria-label={profile.name}
+              className="mt-6 text-display"
+            >
               {hero.titleLines.map((line, index) => (
                 <span
-                  key={`${line}-${index}`}
+                  key={line}
                   className={cx(
                     'block',
                     index === hero.titleLines.length - 1 && 'text-accent',
@@ -54,53 +58,43 @@ export function Hero() {
               </Button>
             </div>
 
-            <dl className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-line pt-6 sm:gap-6">
-              {hero.highlights.map((item) => (
-                <div key={item.label}>
-                  <dt className="text-caption text-subtle">{item.label}</dt>
-                  <dd className="mt-1 text-h3 text-ink">{item.value}</dd>
-                </div>
+            <ul className="mt-12 grid max-w-xl gap-3 border-t border-line pt-6 sm:grid-cols-3">
+              {hero.highlights.map((highlight) => (
+                <li
+                  key={highlight}
+                  className="rounded-xl border border-line bg-surface/70 px-4 py-3 text-sm font-semibold"
+                >
+                  {highlight}
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
 
           <div className="motion-fade w-full max-w-md lg:justify-self-end">
             <div className="rounded-card border border-line bg-surface/90 shadow-card backdrop-blur">
-              <div className="flex flex-col items-start gap-2 border-b border-line px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+              <div className="flex items-center gap-2 border-b border-line px-5 py-4">
+                <span
+                  className="size-1.5 rounded-full bg-accent"
+                  aria-hidden="true"
+                />
                 <p className="text-eyebrow font-semibold uppercase text-muted">
                   {hero.panel.title}
                 </p>
-                <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-surface-2 px-3 py-1 text-caption font-semibold text-muted">
-                  <span
-                    className="size-1.5 rounded-full bg-accent"
-                    aria-hidden="true"
-                  />
-                  {hero.panel.status}
-                </span>
               </div>
 
               <dl className="divide-y divide-line">
-                {hero.panel.rows.map((row, index) => (
+                {hero.panel.rows.map((row) => (
                   <div
-                    key={`${row.label}-${index}`}
-                    className="flex items-baseline justify-between gap-6 px-5 py-4"
+                    key={row.label}
+                    className="flex flex-col gap-0.5 px-5 py-3.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
                   >
                     <dt className="text-caption text-subtle">{row.label}</dt>
-                    <dd className="text-right text-sm font-semibold">
+                    <dd className="text-sm font-semibold sm:text-right">
                       {row.value}
                     </dd>
                   </div>
                 ))}
               </dl>
-
-              <div className="border-t border-line px-5 py-4">
-                <div className="h-1.5 overflow-hidden rounded-full bg-surface-2">
-                  <div
-                    aria-hidden="true"
-                    className="h-full w-2/3 rounded-full bg-accent"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>

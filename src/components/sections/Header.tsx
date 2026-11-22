@@ -5,26 +5,20 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-line/80 bg-canvas/85 backdrop-blur-md">
-      <Container className="flex flex-wrap items-center gap-x-6 gap-y-2 py-3 md:py-4">
-        <a href="#main" className="text-lg font-bold tracking-tight">
+      <Container className="flex flex-wrap items-center gap-x-4 gap-y-2 py-3 md:py-4">
+        <a
+          href="#main"
+          className="w-full text-lg font-bold tracking-tight md:w-auto"
+        >
           {profile.brand}
           <span className="text-accent" aria-hidden="true">
             .
           </span>
         </a>
 
-        <div className="ml-auto md:order-last md:ml-0">
-          <ThemeToggle
-            labels={{
-              toDark: profile.ui.themeToDark,
-              toLight: profile.ui.themeToLight,
-            }}
-          />
-        </div>
-
         <nav
           aria-label={profile.ui.primaryNav}
-          className="order-last w-full md:order-none md:ml-auto md:w-auto"
+          className="min-w-0 flex-1 md:ml-auto md:flex-none"
         >
           <ul className="flex items-center gap-1 overflow-x-auto text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted md:gap-2 md:text-eyebrow">
             {profile.nav.map((item) => (
@@ -39,6 +33,13 @@ export function Header() {
             ))}
           </ul>
         </nav>
+
+        <ThemeToggle
+          labels={{
+            toDark: profile.ui.themeToDark,
+            toLight: profile.ui.themeToLight,
+          }}
+        />
       </Container>
     </header>
   );

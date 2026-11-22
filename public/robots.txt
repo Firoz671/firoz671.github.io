@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# TODO Phase 5: add the sitemap URL.
