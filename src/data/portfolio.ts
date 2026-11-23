@@ -20,7 +20,6 @@ export interface Profile {
   role: string;
   location: string;
   languages: string;
-  currentlyLearning: string;
   ui: {
     skipToContent: string;
     primaryNav: string;
@@ -59,13 +58,20 @@ export interface Profile {
   };
 }
 
+export interface SkillGroup {
+  title: string;
+  items: string[];
+}
+
 export interface SkillsContent {
   eyebrow: string;
   heading: string;
-  groups: Array<{
-    title: string;
-    items: string[];
-  }>;
+  groups: SkillGroup[];
+  learning: {
+    heading: string;
+    intro: string;
+    groups: SkillGroup[];
+  };
 }
 
 export interface ProjectImage {
@@ -167,7 +173,6 @@ export const profile: Profile = {
   role,
   location,
   languages: 'Bangla, English',
-  currentlyLearning: 'Next.js',
   ui: {
     skipToContent: 'Skip to content',
     primaryNav: 'Primary',
@@ -206,7 +211,6 @@ export const profile: Profile = {
         { label: 'Role', value: role },
         { label: 'Location', value: location },
         { label: 'Languages', value: 'Bangla, English' },
-        { label: 'Currently learning', value: 'Next.js' },
       ],
     },
   },
@@ -222,7 +226,6 @@ export const profile: Profile = {
       { label: 'Role', value: role },
       { label: 'Location', value: location },
       { label: 'Languages', value: 'Bangla, English' },
-      { label: 'Currently learning', value: 'Next.js' },
     ],
   },
   footer: {
@@ -303,6 +306,31 @@ export const skills: SkillsContent = {
       ],
     },
   ],
+  learning: {
+    heading: 'Currently Learning & Exploring',
+    intro:
+      'Building on my frontend foundation by exploring AI application development and software architecture.',
+    groups: [
+      {
+        title: 'AI & LLM Engineering',
+        items: [
+          'Large Language Models (LLMs)',
+          'Generative AI',
+          'Retrieval-Augmented Generation (RAG)',
+          'LangChain',
+          'Model Context Protocol (MCP)',
+        ],
+      },
+      {
+        title: 'Software Architecture',
+        items: ['System Design'],
+      },
+      {
+        title: 'Web Frameworks',
+        items: ['Next.js'],
+      },
+    ],
+  },
 };
 
 export const projects: ProjectsContent = {

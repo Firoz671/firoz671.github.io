@@ -48,6 +48,46 @@ export function Skills() {
             </li>
           ))}
         </ul>
+
+        <section
+          aria-labelledby="learning-heading"
+          className="mt-12 rounded-card border border-line bg-surface p-6 shadow-card sm:p-8"
+        >
+          <div className="flex items-start gap-3">
+            <span
+              className="mt-3 h-px w-8 shrink-0 bg-accent"
+              aria-hidden="true"
+            />
+            <div className="min-w-0">
+              <h3 id="learning-heading" className="text-h3">
+                {skills.learning.heading}
+              </h3>
+              <p className="mt-3 max-w-prose text-sm text-muted">
+                {skills.learning.intro}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {skills.learning.groups.map((group) => (
+              <div key={group.title}>
+                <h4 className="text-eyebrow font-semibold uppercase text-subtle">
+                  {group.title}
+                </h4>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <li
+                      key={item}
+                      className="rounded-full border border-line bg-surface-2 px-3 py-1.5 text-caption font-semibold text-muted"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
       </Container>
     </section>
   );
