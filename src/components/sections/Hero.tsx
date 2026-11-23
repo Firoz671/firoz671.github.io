@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { profile } from '../../data/portfolio';
 import { Button } from '../ui/Button';
 import { Container } from '../ui/Container';
@@ -5,6 +6,7 @@ import { cx } from '../ui/classNames';
 
 export function Hero() {
   const { hero } = profile;
+  const [portraitFailed, setPortraitFailed] = useState(false);
 
   return (
     <section
@@ -70,31 +72,53 @@ export function Hero() {
             </ul>
           </div>
 
-          <div className="motion-fade w-full max-w-md lg:justify-self-end">
-            <div className="rounded-card border border-line bg-surface/90 shadow-card backdrop-blur">
-              <div className="flex items-center gap-2 border-b border-line px-5 py-4">
-                <span
-                  className="size-1.5 rounded-full bg-accent"
-                  aria-hidden="true"
-                />
+          <div className="motion-fade mx-auto w-full max-w-md lg:justify-self-end">
+            <div className="overflow-hidden rounded-card border border-line bg-surface shadow-card">
+              <div className="p-2">
+                <div className="relative aspect-square overflow-hidden rounded-xl bg-surface-2 ring-1 ring-ink/10 sm:aspect-[4/5]">
+                  {portraitFailed ? (
+                    <div
+                      role="img"
+                      aria-label={hero.portrait.alt}
+                      className="flex h-full w-full items-center justify-center bg-surface-2"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="grid size-24 place-items-center rounded-3xl bg-accent/10 text-3xl font-bold text-accent-strong"
+                      >
+                        {profile.initials}
+                      </span>
+                    </div>
+                  ) : (
+                    <img
+                      src={hero.portrait.src}
+                      width={hero.portrait.width}
+                      height={hero.portrait.height}
+                      alt={hero.portrait.alt}
+                      loading="eager"
+                      decoding="async"
+                      fetchPriority="high"
+                      onError={() => setPortraitFailed(true)}
+                      className="block h-full w-full object-cover object-[70%_30%]"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="border-t border-line px-5 py-4">
                 <p className="text-eyebrow font-semibold uppercase text-muted">
                   {hero.panel.title}
                 </p>
-              </div>
 
-              <dl className="divide-y divide-line">
-                {hero.panel.rows.map((row) => (
-                  <div
-                    key={row.label}
-                    className="flex flex-col gap-0.5 px-5 py-3.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
-                  >
-                    <dt className="text-caption text-subtle">{row.label}</dt>
-                    <dd className="text-sm font-semibold sm:text-right">
-                      {row.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+                <dl className="mt-3 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+                  {hero.panel.rows.map((row) => (
+                    <div key={row.label} className="min-w-0">
+                      <dt className="text-caption text-subtle">{row.label}</dt>
+                      <dd className="text-sm font-semibold">{row.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </div>
           </div>
         </div>

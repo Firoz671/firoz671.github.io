@@ -37,6 +37,12 @@ export interface Profile {
     primaryCta: ActionLink;
     secondaryCta: ActionLink;
     highlights: string[];
+    portrait: {
+      src: string;
+      width: number;
+      height: number;
+      alt: string;
+    };
     panel: {
       title: string;
       rows: Fact[];
@@ -188,6 +194,12 @@ export const profile: Profile = {
       '10,000-comment sentiment dataset',
       'B.Sc. in CSE, 2025',
     ],
+    portrait: {
+      src: '/img/firoz.png',
+      width: 1672,
+      height: 941,
+      alt: 'Portrait of Md. Firoz Al Mahmud at his desk',
+    },
     panel: {
       title: 'Profile',
       rows: [
