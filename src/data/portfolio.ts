@@ -119,7 +119,26 @@ export interface GitHubContent {
     languages: string;
     contributions: string;
     activity: string;
-    calendar: string;
+  };
+  heatmap: {
+    heading: string;
+    subtitle: string;
+    profile: ActionLink;
+    total: string;
+    legend: {
+      less: string;
+      more: string;
+    };
+    tooltip: {
+      count: string;
+      countSingular: string;
+      empty: string;
+    };
+    summary: string;
+    monthlyHeading: string;
+    monthlyItem: string;
+    scrollLabel: string;
+    empty: string;
   };
   repoMeta: {
     stars: string;
@@ -150,7 +169,6 @@ export interface GitHubContent {
   };
   languageCount: string;
   languageCountSingular: string;
-  calendarSummary: string;
   lastUpdated: string;
   empty: {
     repositories: string;
@@ -473,7 +491,27 @@ export const github: GitHubContent = {
     languages: 'Languages',
     contributions: 'Open source contributions',
     activity: 'Recent activity',
-    calendar: 'Contribution calendar',
+  },
+  heatmap: {
+    heading: 'Open Source Activity',
+    subtitle: 'Building in public, one commit at a time.',
+    profile: { label: '@firoz671', href: githubUrl },
+    total: '{total} contributions in the last year',
+    legend: {
+      less: 'Less',
+      more: 'More',
+    },
+    tooltip: {
+      count: '{count} contributions on {date}',
+      countSingular: '{count} contribution on {date}',
+      empty: 'No contributions',
+    },
+    summary: '{total} contributions between {from} and {to}',
+    monthlyHeading: 'Monthly contributions',
+    monthlyItem: '{month}: {count}',
+    scrollLabel: 'Contribution heatmap, scroll horizontally',
+    empty:
+      'Contribution data is not available yet. The heatmap will appear after the next successful data refresh.',
   },
   repoMeta: {
     stars: 'Stars',
@@ -504,7 +542,6 @@ export const github: GitHubContent = {
   },
   languageCount: '{count} repositories',
   languageCountSingular: '{count} repository',
-  calendarSummary: '{count} contributions in the last year',
   lastUpdated: 'Last updated {date}',
   empty: {
     repositories: 'No public repositories to show yet.',

@@ -3,8 +3,6 @@ import {
   githubSnapshot,
   type ActivityType,
   type GitHubActivity,
-  type GitHubCalendar,
-  type GitHubCalendarDay,
   type GitHubContribution,
   type GitHubLanguage,
   type GitHubRepository,
@@ -14,6 +12,7 @@ import { Container } from '../ui/Container';
 import { ExternalLink } from '../ui/ExternalLink';
 import { SectionHeading } from '../ui/SectionHeading';
 import { cx } from '../ui/classNames';
+import { ContributionGraph } from './ContributionGraph';
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -27,14 +26,6 @@ const stateStyles: Record<GitHubContribution['state'], string> = {
   merged: 'border-accent bg-accent text-accent-ink',
   closed: 'border-line bg-surface-2 text-muted',
 };
-
-const calendarLevels = [
-  'fill-line',
-  'fill-accent/30',
-  'fill-accent/50',
-  'fill-accent/70',
-  'fill-accent',
-];
 
 function formatDate(value: string | null): string | null {
   if (!value) {
@@ -176,48 +167,6 @@ function LanguageList({ languages }: { languages: GitHubLanguage[] }) {
   );
 }
 
-function CalendarDay({ day }: { day: GitHubCalendarDay }) {
-  return (
-    <rect
-      x={0}
-      y={day.weekday * 12}
-      width={10}
-      height={10}
-      rx={2}
-      className={calendarLevels[day.level] ?? calendarLevels[0]}
-    />
-  );
-}
-
-function ContributionCalendar({ calendar }: { calendar: GitHubCalendar }) {
-  const width = calendar.weeks.length * 12;
-
-  return (
-    <div className="rounded-card border border-line bg-surface p-6 shadow-card md:p-8">
-      <h3 className="text-eyebrow font-semibold uppercase text-accent-strong">
-        {github.blocks.calendar}
-      </h3>
-      <p className="mt-3 text-sm text-muted">
-        {replaceCount(github.calendarSummary, calendar.totalContributions)}
-      </p>
-      <svg
-        viewBox={`0 0 ${width} 84`}
-        className="mt-5 h-auto w-full"
-        aria-hidden="true"
-        focusable="false"
-      >
-        {calendar.weeks.map((week, weekIndex) => (
-          <g key={weekIndex} transform={`translate(${weekIndex * 12} 0)`}>
-            {week.days.map((day) => (
-              <CalendarDay key={day.date} day={day} />
-            ))}
-          </g>
-        ))}
-      </svg>
-    </div>
-  );
-}
-
 function ContributionItem({ contribution }: { contribution: GitHubContribution }) {
   const date = formatDate(contribution.date);
 
@@ -284,13 +233,11 @@ function SectionBody({
   languages,
   contributions,
   activity,
-  calendar,
 }: {
   repositories: GitHubRepository[];
   languages: GitHubLanguage[];
   contributions: GitHubContribution[];
   activity: GitHubActivity[];
-  calendar: GitHubCalendar | null;
 }): ReactNode {
   return (
     <>
@@ -315,12 +262,6 @@ function SectionBody({
       <div className="mt-10">
         <LanguageList languages={languages} />
       </div>
-
-      {calendar && calendar.weeks.length > 0 ? (
-        <div className="mt-10">
-          <ContributionCalendar calendar={calendar} />
-        </div>
-      ) : null}
 
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
         <div>
@@ -377,7 +318,6 @@ export function GitHub() {
     (total, repository) => total + repository.stars,
     0,
   );
-  const updated = formatDate(generatedAt);
 
   return (
     <section
@@ -438,21 +378,16 @@ export function GitHub() {
           </div>
         </dl>
 
+        <div className="mt-12">
+          <ContributionGraph calendar={calendar} generatedAt={generatedAt} />
+        </div>
+
         <SectionBody
           repositories={repositories}
           languages={languages}
           contributions={contributions}
           activity={activity}
-          calendar={calendar}
         />
-
-        {updated ? (
-          <p className="mt-10 text-caption text-subtle">
-            <time dateTime={generatedAt}>
-              {github.lastUpdated.replace('{date}', updated)}
-            </time>
-          </p>
-        ) : null}
       </Container>
     </section>
   );

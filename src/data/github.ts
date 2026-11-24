@@ -50,17 +50,17 @@ export interface GitHubActivity {
 export interface GitHubCalendarDay {
   date: string;
   count: number;
-  weekday: number;
   level: number;
 }
 
-export interface GitHubCalendarWeek {
-  days: GitHubCalendarDay[];
-}
+export type GitHubCalendarSource = 'graphql' | 'public-page';
 
 export interface GitHubCalendar {
-  totalContributions: number;
-  weeks: GitHubCalendarWeek[];
+  total: number;
+  weeks: GitHubCalendarDay[][];
+  from: string;
+  to: string;
+  source: GitHubCalendarSource;
 }
 
 export interface GitHubSnapshot {

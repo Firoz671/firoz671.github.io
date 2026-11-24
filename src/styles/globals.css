@@ -39,6 +39,11 @@
   --focus: #1d4ed8;
   --card-shadow: 0 1px 2px rgb(10 12 16 / 0.05), 0 18px 40px -24px rgb(10 12 16 / 0.22);
   --card-shadow-hover: 0 2px 4px rgb(10 12 16 / 0.06), 0 28px 60px -28px rgb(10 12 16 / 0.3);
+  --heatmap-0: #e8e3d8;
+  --heatmap-1: #f2c08f;
+  --heatmap-2: #e58e45;
+  --heatmap-3: #bf5a1c;
+  --heatmap-4: #7f2a08;
 }
 
 html[data-theme="light"] {
@@ -58,6 +63,11 @@ html[data-theme="dark"] {
   --accent-strong: #fdba74;
   --accent-ink: #1a0f04;
   --focus: #93c5fd;
+  --heatmap-0: #2f3540;
+  --heatmap-1: #6f320e;
+  --heatmap-2: #a64b12;
+  --heatmap-3: #d96a1f;
+  --heatmap-4: #fb923c;
 }
 
 @theme inline {
@@ -240,6 +250,27 @@ html[data-theme="dark"] {
     display: none;
   }
 
+  .heatmap-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+
+  .heatmap-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .heatmap-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .heatmap-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--line);
+  }
+
+  .heatmap-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--subtle);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

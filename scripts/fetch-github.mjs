@@ -5,9 +5,23 @@ import { fileURLToPath } from 'node:url';
 const USERNAME = (process.env.GITHUB_USERNAME || 'firoz671').trim();
 const API_BASE = (process.env.GITHUB_API_BASE || 'https://api.github.com').replace(/\/+$/, '');
 const TOKEN = (process.env.GITHUB_TOKEN || '').trim();
+const PUBLIC_CONTRIBUTIONS_URL = (
+  process.env.GITHUB_CONTRIBUTIONS_URL ||
+  `https://github.com/users/${encodeURIComponent(USERNAME)}/contributions`
+).trim();
 
 const OUTPUT_PATH = fileURLToPath(new URL('../src/data/github.json', import.meta.url));
 const PORTFOLIO_PATH = fileURLToPath(new URL('../src/data/portfolio.ts', import.meta.url));
+
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+const CONTRIBUTION_LEVELS = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
+};
 
 function warn(message) {
   console.warn(`[github] ${message}`);
@@ -381,11 +395,85 @@ async function fetchActivity() {
   return activity;
 }
 
-async function fetchCalendar() {
-  if (!TOKEN) {
+function parseDate(value) {
+  if (typeof value !== 'string' || !DATE_PATTERN.test(value)) {
     return null;
   }
 
+  const date = new Date(`${value}T00:00:00Z`);
+
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function normalizeCalendarDay(day) {
+  if (!day || typeof day !== 'object') {
+    return null;
+  }
+
+  const date = parseDate(day.date);
+  const count =
+    typeof day.count === 'number' && Number.isFinite(day.count) && day.count >= 0
+      ? Math.floor(day.count)
+      : null;
+  const level =
+    Number.isInteger(day.level) && day.level >= 0 && day.level <= 4 ? day.level : null;
+
+  if (!date || count === null || level === null) {
+    return null;
+  }
+
+  return { date: day.date, count, level };
+}
+
+function buildCalendar(weeks, total, source) {
+  if (!Array.isArray(weeks) || weeks.length === 0) {
+    throw new Error('Contribution calendar contained no weeks');
+  }
+
+  const normalizedWeeks = [];
+  const allDays = [];
+
+  for (const week of weeks) {
+    if (!Array.isArray(week)) {
+      throw new Error('Unexpected contribution week shape');
+    }
+
+    const days = week.map(normalizeCalendarDay);
+
+    if (days.some((day) => day === null)) {
+      throw new Error('Unexpected contribution day shape');
+    }
+
+    days.sort((a, b) => a.date.localeCompare(b.date));
+
+    if (days.length > 0) {
+      normalizedWeeks.push(days);
+      allDays.push(...days);
+    }
+  }
+
+  if (allDays.length === 0) {
+    throw new Error('Contribution calendar contained no days');
+  }
+
+  allDays.sort((a, b) => a.date.localeCompare(b.date));
+
+  const computedTotal = allDays.reduce((sum, day) => sum + day.count, 0);
+  const safeTotal =
+    typeof total === 'number' && Number.isFinite(total) && total >= 0
+      ? Math.floor(total)
+      : computedTotal;
+
+  return {
+    total: safeTotal,
+    weeks: normalizedWeeks,
+    from: allDays[0].date,
+    to: allDays[allDays.length - 1].date,
+    source,
+  };
+}
+
+async function fetchCalendarGraphQL() {
   const now = new Date();
   const from = new Date(
     Date.UTC(now.getUTCFullYear() - 1, now.getUTCMonth(), now.getUTCDate()),
@@ -400,7 +488,7 @@ async function fetchCalendar() {
               contributionDays {
                 date
                 contributionCount
-                weekday
+                contributionLevel
               }
             }
           }
@@ -440,9 +528,14 @@ async function fetchCalendar() {
   const allDays = calendar.weeks.flatMap((week) =>
     Array.isArray(week.contributionDays) ? week.contributionDays : [],
   );
-  const maximum = Math.max(0, ...allDays.map((day) => day.contributionCount || 0));
+  const maximum = Math.max(
+    0,
+    ...allDays.map((day) =>
+      typeof day.contributionCount === 'number' ? day.contributionCount : 0,
+    ),
+  );
 
-  const levelFor = (count) => {
+  const levelForCount = (count) => {
     if (count === 0 || maximum === 0) {
       return 0;
     }
@@ -462,29 +555,205 @@ async function fetchCalendar() {
     return 1;
   };
 
-  const weeks = calendar.weeks.map((week) => ({
-    days: (Array.isArray(week.contributionDays) ? week.contributionDays : []).map((day) => ({
-      date: day.date,
-      count: typeof day.contributionCount === 'number' ? day.contributionCount : 0,
-      weekday: typeof day.weekday === 'number' ? day.weekday : 0,
-      level: levelFor(typeof day.contributionCount === 'number' ? day.contributionCount : 0),
-    })),
-  }));
+  const weeks = calendar.weeks.map((week) =>
+    (Array.isArray(week.contributionDays) ? week.contributionDays : []).map((day) => {
+      const count =
+        typeof day.contributionCount === 'number' && Number.isFinite(day.contributionCount)
+          ? Math.max(0, Math.floor(day.contributionCount))
+          : 0;
+      const mappedLevel = CONTRIBUTION_LEVELS[day.contributionLevel];
 
-  const total = allDays.reduce(
-    (sum, day) => sum + (typeof day.contributionCount === 'number' ? day.contributionCount : 0),
-    0,
+      return {
+        date: day.date,
+        count,
+        level: Number.isInteger(mappedLevel) ? mappedLevel : levelForCount(count),
+      };
+    }),
   );
 
-  return {
-    totalContributions:
-      typeof calendar.totalContributions === 'number' ? calendar.totalContributions : total,
-    weeks,
-  };
+  return buildCalendar(weeks, calendar.totalContributions, 'graphql');
+}
+
+function decodeHtmlEntities(value) {
+  return value
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#(?:39|x27);/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>');
+}
+
+function stripHtmlTags(value) {
+  return value.replace(/<[^>]*>/g, ' ');
+}
+
+function parseContributionCount(tooltipHtml) {
+  const text = decodeHtmlEntities(stripHtmlTags(tooltipHtml)).replace(/\s+/g, ' ').trim();
+
+  if (/^No contributions\b/i.test(text)) {
+    return 0;
+  }
+
+  const match = text.match(/^([\d,]+)\s+contributions?\b/i);
+
+  if (!match) {
+    return null;
+  }
+
+  const count = Number(match[1].replace(/,/g, ''));
+
+  return Number.isFinite(count) ? count : null;
+}
+
+function readAttribute(tag, name) {
+  const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`, 'i'));
+
+  return match ? match[1] : null;
+}
+
+function parsePublicContributionPage(html) {
+  if (typeof html !== 'string' || html.length < 1000) {
+    throw new Error('Unexpected contributions page response');
+  }
+
+  const tooltips = new Map();
+  const tooltipPattern = /<tool-tip\b[^>]*\bfor="([^"]+)"[^>]*>([\s\S]*?)<\/tool-tip>/gi;
+  let tooltipMatch = tooltipPattern.exec(html);
+
+  while (tooltipMatch) {
+    tooltips.set(tooltipMatch[1], tooltipMatch[2]);
+    tooltipMatch = tooltipPattern.exec(html);
+  }
+
+  const days = [];
+  const cellPattern = /<td\b[^>]*>/gi;
+  let cellMatch = cellPattern.exec(html);
+
+  while (cellMatch) {
+    const tag = cellMatch[0];
+    const date = readAttribute(tag, 'data-date');
+
+    if (date) {
+      const levelValue = readAttribute(tag, 'data-level');
+      const id = readAttribute(tag, 'id');
+
+      if (!parseDate(date) || !/^[0-4]$/.test(levelValue || '')) {
+        throw new Error(`Unexpected contribution cell for ${date}`);
+      }
+
+      const tooltip = id ? tooltips.get(id) : null;
+
+      if (!tooltip) {
+        throw new Error(`Missing contribution tooltip for ${date}`);
+      }
+
+      const count = parseContributionCount(tooltip);
+
+      if (count === null) {
+        throw new Error(`Could not parse contribution count for ${date}`);
+      }
+
+      days.push({ date, count, level: Number(levelValue) });
+    }
+
+    cellMatch = cellPattern.exec(html);
+  }
+
+  if (days.length < 300) {
+    throw new Error(`Unexpected contribution day count (${days.length})`);
+  }
+
+  const weeksByStart = new Map();
+
+  for (const day of days) {
+    const date = parseDate(day.date);
+    const weekday = date.getUTCDay();
+    const weekStart = new Date(date.getTime() - weekday * 86400000)
+      .toISOString()
+      .slice(0, 10);
+
+    if (!weeksByStart.has(weekStart)) {
+      weeksByStart.set(weekStart, []);
+    }
+
+    weeksByStart.get(weekStart).push(day);
+  }
+
+  const weeks = [...weeksByStart.entries()]
+    .sort(([first], [second]) => first.localeCompare(second))
+    .map(([, weekDays]) => weekDays.sort((a, b) => a.date.localeCompare(b.date)));
+  const total = days.reduce((sum, day) => sum + day.count, 0);
+
+  return buildCalendar(weeks, total, 'public-page');
+}
+
+async function fetchCalendarFromPublicPage() {
+  const response = await fetch(PUBLIC_CONTRIBUTIONS_URL, {
+    headers: {
+      Accept: 'text/html',
+      'User-Agent': `${USERNAME}-portfolio-build`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Contributions page ${response.status} ${response.statusText}`);
+  }
+
+  const html = await response.text();
+
+  return parsePublicContributionPage(html);
+}
+
+async function readExistingCalendar() {
+  try {
+    const source = await readFile(OUTPUT_PATH, 'utf8');
+    const snapshot = JSON.parse(source);
+    const calendar = snapshot && typeof snapshot === 'object' ? snapshot.calendar : null;
+
+    if (!calendar || !Array.isArray(calendar.weeks)) {
+      return null;
+    }
+
+    if (calendar.weeks.every((week) => Array.isArray(week))) {
+      return buildCalendar(
+        calendar.weeks.map((week) =>
+          week.map((day) => ({
+            date: day && day.date,
+            count: day && day.count,
+            level: day && day.level,
+          })),
+        ),
+        calendar.total,
+        calendar.source === 'graphql' || calendar.source === 'public-page'
+          ? calendar.source
+          : 'graphql',
+      );
+    }
+
+    if (calendar.weeks.every((week) => week && Array.isArray(week.days))) {
+      return buildCalendar(
+        calendar.weeks.map((week) =>
+          week.days.map((day) => ({
+            date: day && day.date,
+            count: day && day.count,
+            level: day && day.level,
+          })),
+        ),
+        calendar.totalContributions,
+        'graphql',
+      );
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
 }
 
 async function main() {
   const lists = await readRepoLists();
+  const existingCalendar = await readExistingCalendar();
 
   try {
     const profile = await fetchProfile();
@@ -504,13 +773,31 @@ async function main() {
     const shown = mapRepositories(selected);
     const languages = aggregateLanguages(shown);
 
-    let calendar = null;
+    let calendar = existingCalendar;
 
     if (TOKEN) {
       try {
-        calendar = await fetchCalendar();
+        calendar = await fetchCalendarGraphQL();
       } catch (error) {
-        warn(`Contribution calendar unavailable (${error.message}); continuing without it.`);
+        warn(
+          `GraphQL contribution calendar unavailable (${error.message}); trying the public contributions page.`,
+        );
+
+        try {
+          calendar = await fetchCalendarFromPublicPage();
+        } catch (publicError) {
+          warn(
+            `Public contribution calendar unavailable (${publicError.message}); keeping the existing calendar.`,
+          );
+        }
+      }
+    } else {
+      try {
+        calendar = await fetchCalendarFromPublicPage();
+      } catch (error) {
+        warn(
+          `Public contribution calendar unavailable (${error.message}); keeping the existing calendar.`,
+        );
       }
     }
 
@@ -528,8 +815,12 @@ async function main() {
     await mkdir(dirname(OUTPUT_PATH), { recursive: true });
     await writeFile(OUTPUT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
 
+    const calendarSummary = calendar
+      ? `${calendar.total} contributions across ${calendar.weeks.length} weeks from ${calendar.source}`
+      : 'skipped';
+
     console.log(
-      `[github] Wrote snapshot: ${profile.publicRepos} public repos, ${shown.length} shown, ${languages.length} languages, ${contributions.length} contributions, ${activity.length} recent events, calendar ${calendar ? 'included' : 'skipped'}.`,
+      `[github] Wrote snapshot: ${profile.publicRepos} public repos, ${shown.length} shown, ${languages.length} languages, ${contributions.length} contributions, ${activity.length} recent events, calendar ${calendarSummary}.`,
     );
   } catch (error) {
     warn(`Could not refresh snapshot (${error.message}). Keeping the existing github.json.`);
