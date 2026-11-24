@@ -103,6 +103,65 @@ export interface ProjectsContent {
   items: Project[];
 }
 
+export interface GitHubContent {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  profileLink: ActionLink;
+  memberSince: string;
+  stats: {
+    repositories: string;
+    followers: string;
+    stars: string;
+  };
+  blocks: {
+    repositories: string;
+    languages: string;
+    contributions: string;
+    activity: string;
+    calendar: string;
+  };
+  repoMeta: {
+    stars: string;
+    forks: string;
+    updated: string;
+    noDescription: string;
+  };
+  contributionStates: {
+    open: string;
+    merged: string;
+    closed: string;
+  };
+  activity: {
+    push: string;
+    pushGeneric: string;
+    commitSingular: string;
+    commitPlural: string;
+    prOpened: string;
+    prMerged: string;
+    prClosed: string;
+    issueOpened: string;
+    issueClosed: string;
+    fork: string;
+    release: string;
+    createRepo: string;
+    createBranch: string;
+    createTag: string;
+  };
+  languageCount: string;
+  languageCountSingular: string;
+  calendarSummary: string;
+  lastUpdated: string;
+  empty: {
+    repositories: string;
+    languages: string;
+    contributions: string;
+    activity: string;
+  };
+  pinned: string[];
+  hidden: string[];
+}
+
 export interface EducationItem {
   degree: string;
   institution: string;
@@ -161,7 +220,7 @@ const name = 'Md. Firoz Al Mahmud';
 const role = 'Software Engineer, Frontend (React)';
 const location = 'Dhaka, Bangladesh';
 const email = 'firoz.a.mahmud01@gmail.com';
-const github = 'https://github.com/firoz671';
+const githubUrl = 'https://github.com/firoz671';
 const linkedin = 'https://www.linkedin.com/in/firoz-al-mahmud-264982243/';
 const summarySeeking =
   'Seeking a Software Engineer role where I can contribute to scalable software solutions while continuously strengthening my engineering expertise.';
@@ -185,6 +244,7 @@ export const profile: Profile = {
     { label: 'About', href: '#about' },
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
+    { label: 'GitHub', href: '#github' },
     { label: 'Education', href: '#education' },
     { label: 'Contact', href: '#contact' },
   ],
@@ -396,6 +456,66 @@ export const projects: ProjectsContent = {
   ],
 };
 
+export const github: GitHubContent = {
+  eyebrow: 'Open source',
+  heading: 'GitHub',
+  intro:
+    'A live snapshot of my public repositories and open source activity on GitHub.',
+  profileLink: { label: 'View on GitHub', href: githubUrl },
+  memberSince: 'Member since {year}',
+  stats: {
+    repositories: 'Public repositories',
+    followers: 'Followers',
+    stars: 'Total stars',
+  },
+  blocks: {
+    repositories: 'Repositories',
+    languages: 'Languages',
+    contributions: 'Open source contributions',
+    activity: 'Recent activity',
+    calendar: 'Contribution calendar',
+  },
+  repoMeta: {
+    stars: 'Stars',
+    forks: 'Forks',
+    updated: 'Updated',
+    noDescription: 'No description provided.',
+  },
+  contributionStates: {
+    open: 'Open',
+    merged: 'Merged',
+    closed: 'Closed',
+  },
+  activity: {
+    push: 'Pushed {count} {unit} to {repo}',
+    pushGeneric: 'Pushed commits to {repo}',
+    commitSingular: 'commit',
+    commitPlural: 'commits',
+    prOpened: 'Opened a pull request in {repo}',
+    prMerged: 'Merged a pull request in {repo}',
+    prClosed: 'Closed a pull request in {repo}',
+    issueOpened: 'Opened an issue in {repo}',
+    issueClosed: 'Closed an issue in {repo}',
+    fork: 'Forked {repo}',
+    release: 'Published a release in {repo}',
+    createRepo: 'Created the repository {repo}',
+    createBranch: 'Created a branch in {repo}',
+    createTag: 'Created a tag in {repo}',
+  },
+  languageCount: '{count} repositories',
+  languageCountSingular: '{count} repository',
+  calendarSummary: '{count} contributions in the last year',
+  lastUpdated: 'Last updated {date}',
+  empty: {
+    repositories: 'No public repositories to show yet.',
+    languages: 'No language data available yet.',
+    contributions: 'No public open source contributions yet.',
+    activity: 'No recent public activity yet.',
+  },
+  pinned: [],
+  hidden: [],
+};
+
 export const education: EducationContent = {
   eyebrow: 'Education',
   heading: 'Education and certifications',
@@ -450,7 +570,7 @@ export const contact: ContactContent = {
     {
       label: 'GitHub',
       value: 'github.com/firoz671',
-      href: github,
+      href: githubUrl,
       external: true,
     },
     {

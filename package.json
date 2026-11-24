@@ -8,7 +8,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "prefetch": "node scripts/fetch-github.mjs",
+    "build": "node scripts/fetch-github.mjs && tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

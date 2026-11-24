@@ -4,6 +4,7 @@ import { Hero } from './components/sections/Hero';
 import { About } from './components/sections/About';
 import { Skills } from './components/sections/Skills';
 import { Projects } from './components/sections/Projects';
+import { GitHub } from './components/sections/GitHub';
 import { EducationCertifications } from './components/sections/EducationCertifications';
 import { Contact } from './components/sections/Contact';
 import { Footer } from './components/sections/Footer';
@@ -25,6 +26,7 @@ export default function App() {
         <About />
         <Skills />
         <Projects />
+        <GitHub />
         <EducationCertifications />
         <Contact />
       </main>

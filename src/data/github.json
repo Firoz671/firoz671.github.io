@@ -1,0 +1,119 @@
+{
+  "generatedAt": "2026-11-24T08:47:25.840Z",
+  "username": "firoz671",
+  "profile": {
+    "login": "Firoz671",
+    "publicRepos": 55,
+    "followers": 5,
+    "createdYear": 2021,
+    "htmlUrl": "https://github.com/Firoz671"
+  },
+  "repositories": [
+    {
+      "name": "firoz671.github.io",
+      "description": null,
+      "language": "TypeScript",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-11-23T17:54:17Z",
+      "url": "https://github.com/Firoz671/firoz671.github.io"
+    },
+    {
+      "name": "Nexus-Admin",
+      "description": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-11-17T05:13:42Z",
+      "url": "https://github.com/Firoz671/Nexus-Admin"
+    },
+    {
+      "name": "ShipNow-logistics-dashboard",
+      "description": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-07-30T12:57:12Z",
+      "url": "https://github.com/Firoz671/ShipNow-logistics-dashboard"
+    },
+    {
+      "name": "Firoz671",
+      "description": "Config files for my GitHub profile.",
+      "language": null,
+      "stars": 3,
+      "forks": 0,
+      "pushedAt": "2026-07-18T18:39:18Z",
+      "url": "https://github.com/Firoz671/Firoz671"
+    },
+    {
+      "name": "cineanalytics-dashboard",
+      "description": "A business intelligence project that analyzes IMDb movie data to uncover trends, performance metrics, and actionable insights through interactive visualizations.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-06-17T08:32:46Z",
+      "url": "https://github.com/Firoz671/cineanalytics-dashboard"
+    },
+    {
+      "name": "Firoz-Al-Mahmud-Portfolio",
+      "description": null,
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-06-10T04:30:43Z",
+      "url": "https://github.com/Firoz671/Firoz-Al-Mahmud-Portfolio"
+    }
+  ],
+  "languages": [
+    {
+      "name": "JavaScript",
+      "count": 3
+    },
+    {
+      "name": "Jupyter Notebook",
+      "count": 1
+    },
+    {
+      "name": "TypeScript",
+      "count": 1
+    }
+  ],
+  "contributions": [],
+  "activity": [
+    {
+      "repo": "Firoz671/firoz671.github.io",
+      "repoUrl": "https://github.com/Firoz671/firoz671.github.io",
+      "date": "2026-11-22T18:59:34Z",
+      "type": "create-branch"
+    },
+    {
+      "repo": "Firoz671/firoz671.github.io",
+      "repoUrl": "https://github.com/Firoz671/firoz671.github.io",
+      "date": "2026-11-22T19:12:23Z",
+      "type": "push",
+      "count": 1
+    },
+    {
+      "repo": "Firoz671/Nexus-Admin",
+      "repoUrl": "https://github.com/Firoz671/Nexus-Admin",
+      "date": "2026-11-17T05:13:43Z",
+      "type": "push",
+      "count": 1
+    },
+    {
+      "repo": "Firoz671/Nexus-Admin",
+      "repoUrl": "https://github.com/Firoz671/Nexus-Admin",
+      "date": "2026-11-04T16:45:04Z",
+      "type": "push",
+      "count": 3
+    },
+    {
+      "repo": "Firoz671/Nexus-Admin",
+      "repoUrl": "https://github.com/Firoz671/Nexus-Admin",
+      "date": "2026-10-31T05:21:04Z",
+      "type": "push",
+      "count": 1
+    }
+  ],
+  "calendar": null
+}
